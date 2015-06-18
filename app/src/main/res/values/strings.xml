@@ -1,0 +1,21 @@
+<resources>
+    <string name="title_activity_invisible" translatable="false">InvisibleActivity</string>
+
+    <string name="app_name">Shortcut 4</string>
+    <string name="action_settings">Settings</string>
+    <string name="shortcut_notification_enabled">Shortcut Notification Enabled</string>
+    <string name="notification_title">Shortcut app</string>
+    <string name="btn_lock_notif">Loc</string>
+    <string name="btn_volume_notif">Vol</string>
+    <string name="btn_home_notif">Hom</string>
+    <string name="btn_enable_shortcut_notification">Enable</string>
+    <string name="btn_disable_shortcut_notification">Disable</string>
+    <string name="welcome">Welcome !</string>
+    <string name="welcom_main_page">Here you can add Shortcuts in notification view !!</string>
+    <string name="notification_content">Swipe down for shortcuts.</string>
+    <string name="title_activity_first_time_launch" translatable="false">Information</string>
+
+    <string name="ok" translatable="false">OK</string>
+    <string name="confirmMsg">Please check Notificatoin Listener and then Activate the app in the Device administrator. After that, the app will be ready to use.</string>
+
+</resources>

@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="app_name">Shortcut 4</string>
+    <string name="action_settings">Paramètre</string>
+    <string name="shortcut_notification_enabled">Raccourci Notification Activé</string>
+    <string name="notification_title">Raccourci app</string>
+    <string name="btn_lock_notif">Ver</string>
+    <string name="btn_volume_notif">Vol</string>
+    <string name="btn_home_notif">Acc</string>
+    <string name="btn_enable_shortcut_notification">Activer</string>
+    <string name="btn_disable_shortcut_notification">Désactiver</string>
+    <string name="welcome">Bienvenu !</string>
+    <string name="welcom_main_page">Vous pouvez ajouter des Raccourcis dans la barre de notification !!</string>
+    <string name="notification_content">Glissez vers le bas pour les raccourcis.</string>
+    <string name="confirmMsg">Please check Notificatoin Listener and then Activate the app in the Device administrator. After that, the app will be ready to use.</string>
+
+</resources>
