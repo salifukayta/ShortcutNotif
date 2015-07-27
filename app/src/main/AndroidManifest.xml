@@ -18,17 +18,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HomeInvisibleActivity"
+            android:name=".activities.notification_btn.HomeInvisibleActivity"
             android:label="@string/title_activity_invisible"
             android:theme="@android:style/Theme.NoDisplay" >
         </activity>
         <activity
-            android:name=".activities.VolumeInvisibleActivity"
+            android:name=".activities.notification_btn.VolumeInvisibleActivity"
             android:label="@string/title_activity_invisible"
             android:theme="@android:style/Theme.NoDisplay" >
         </activity>
         <activity
-            android:name=".activities.LockInvisibleActivity"
+            android:name=".activities.notification_btn.LockInvisibleActivity"
+            android:label="@string/title_activity_invisible"
+            android:theme="@android:style/Theme.NoDisplay" >
+        </activity>
+        <activity
+            android:name=".activities.FirstTimeLaunchActivity"
+            android:label="@string/title_activity_first_time_launch"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activities.notification_btn.TaskManagerInvisibleActivity"
             android:label="@string/title_activity_invisible"
             android:theme="@android:style/Theme.NoDisplay" >
         </activity>
@@ -53,12 +63,6 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-
-        <activity
-            android:name=".activities.FirstTimeLaunchActivity"
-            android:label="@string/title_activity_first_time_launch"
-            android:screenOrientation="portrait" >
-        </activity>
     </application>
 
 </manifest>

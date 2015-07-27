@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">Shortcut 4</string>
-    <string name="action_settings">Paramètre</string>
+    <string name="action_settings">Théme</string>
     <string name="shortcut_notification_enabled">Raccourci Notification Activé</string>
     <string name="notification_title">Raccourci app</string>
     <string name="btn_lock_notif">Ver</string>
@@ -12,6 +12,23 @@
     <string name="welcome">Bienvenu !</string>
     <string name="welcom_main_page">Vous pouvez ajouter des Raccourcis dans la barre de notification !!</string>
     <string name="notification_content">Glissez vers le bas pour les raccourcis.</string>
+    <string name="title_activity_first_time_launch">Information</string>
+    <string name="pref_themes_entries">pref_themes_entries</string>
+
     <string name="confirmMsg">Please check Notificatoin Listener and then Activate the app in the Device administrator. After that, the app will be ready to use.</string>
+
+    <string name="choose_theme">Théme de la Notification</string>
+
+    <string name="default_theme">Théme par Défaut</string>
+    <string name="default_bgn_gray_theme">Théme par Défaut - Fond Gris</string>
+    <string name="blue_orb_theme">Théme Orbe Bleu</string>
+    <string name="theme_blue_orb_bgn_gray">Théme Orbe Bleu - Fond Gris</string>
+
+    <string name="tips_uninstall">Astuces Désinstallation</string>
+    <string name="help">Aide</string>
+    <string name="action_needed_to_uninstall_this_app">Action Nécessaire pour la désinstallation</string>
+    <string name="understood">Compris</string>
+    <string name="uninstall_msg_actions">Afin de désinstaller cette application: \n\n - Aller au Paramétre Aandroid\n\n - Cliquer sur \'Securité\'\n\n - Cliquer sur\'Admin. de périférique\' \n\n - Finalement Décocher l\'app \'Shortcut4\'.</string>
+    <string name="help_msg">(1) => Verrouiller \n(2) => Accueil/Déverrouiller\n(3) => Volume\n(4) => Gestionnaire des Tâches</string>
 
 </resources>

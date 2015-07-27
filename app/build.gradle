@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.shortcut.sol.shortcutnotif"
-        minSdkVersion 18
+        minSdkVersion 15
         targetSdkVersion 22
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.3"
     }
     buildTypes {
         release {
@@ -22,5 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:22.2.0'
 }

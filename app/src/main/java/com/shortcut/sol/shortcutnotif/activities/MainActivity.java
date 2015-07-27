@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 
 import com.shortcut.sol.shortcutnotif.ConstEnum;
 import com.shortcut.sol.shortcutnotif.R;
+import com.shortcut.sol.shortcutnotif.activities.notification_btn.HomeInvisibleActivity;
+import com.shortcut.sol.shortcutnotif.activities.notification_btn.LockInvisibleActivity;
+import com.shortcut.sol.shortcutnotif.activities.notification_btn.TaskManagerInvisibleActivity;
+import com.shortcut.sol.shortcutnotif.activities.notification_btn.VolumeInvisibleActivity;
+import com.shortcut.sol.shortcutnotif.fragments.HelpFragment;
+import com.shortcut.sol.shortcutnotif.fragments.SettingFragment;
+import com.shortcut.sol.shortcutnotif.fragments.UninstallTipsFragment;
 
 /**
  * Created by safeki on 01/06/2015.
@@ -30,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private NotificationCompat.Builder builderShortcutNotif;
     private SharedPreferences settings;
     private Button btnSwitch;
-    static boolean isEnabled;
+    private static boolean isEnabled;
     private static final int NOTIFICATION_ID = 11;
+    //ic_menu_setting
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(com.shortcut.sol.shortcutnotif.R.layout.activity_main);
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        builderShortcutNotif = prepareNotification();
+        constructNotification();
 
         btnSwitch = (Button) findViewById(R.id.btnEnableDisable);
         btnSwitch.setOnClickListener(new View.OnClickListener() {
@@ -71,37 +81,52 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(notificationReceiver, filter);
     }
 
-    private NotificationCompat.Builder prepareNotification() {
+    public void constructNotification() {
         Intent intentLock = new Intent(this, LockInvisibleActivity.class);
         Intent intentVolume = new Intent(this, VolumeInvisibleActivity.class);
         Intent intentHome = new Intent(this, HomeInvisibleActivity.class);
+        Intent intentTaskManager = new Intent(this, TaskManagerInvisibleActivity.class);
 
         PendingIntent pIntentLock = PendingIntent.getActivity(this, 0, intentLock, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pIntentHome = PendingIntent.getActivity(this, 0, intentHome, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pIntentVolume = PendingIntent.getActivity(this, 0, intentVolume, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntentTaskManager = PendingIntent.getActivity(this, 0, intentTaskManager, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        return new NotificationCompat.Builder(this)
+        int theme_choice = getPreferences(Context.MODE_PRIVATE).getInt("pref_theme", 0);
+        TypedArray themes_available = getResources().obtainTypedArray(R.array.pref_themes_entries);
+        
+        RemoteViews notificationView = new RemoteViews(getPackageName(), themes_available.getResourceId(theme_choice, 0));
+        notificationView.setOnClickPendingIntent(R.id.lockBtn, pIntentLock);
+        notificationView.setOnClickPendingIntent(R.id.homeBtn, pIntentHome);
+        notificationView.setOnClickPendingIntent(R.id.volumeBtn, pIntentVolume);
+        notificationView.setOnClickPendingIntent(R.id.taskManagerBtn, pIntentTaskManager);
+
+        builderShortcutNotif = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_app)
                 .setTicker(getString(R.string.shortcut_notification_enabled))
-                .setContentTitle(getString(R.string.notification_title))
-                .setContentText(getString(R.string.notification_content))
-                .addAction(R.mipmap.clipart_lock_gray, getString(R.string.btn_lock_notif), pIntentLock)
-                .addAction(R.mipmap.clipart_volume_gray, getString(R.string.btn_volume_notif), pIntentVolume)
-                .addAction(R.mipmap.clipart_home_gray, getString(R.string.btn_home_notif), pIntentHome)
+                .setContent(notificationView)
                 .setAutoCancel(false)
                 .setOngoing(true);
     }
 
-    public void enableDisableShortcutNotif() {
+    private void enableDisableShortcutNotif() {
         if (isEnabled) {
             // Do Disable
-            notificationManager.cancel(NOTIFICATION_ID);
-            btnSwitch.setText(getString(R.string.btn_enable_shortcut_notification));
+            doDisable();
         } else {
             // Do Enable
-            notificationManager.notify(NOTIFICATION_ID, builderShortcutNotif.build());
-            btnSwitch.setText(getString(R.string.btn_disable_shortcut_notification));
+            doEnable();
         }
+    }
+
+    public void doEnable() {
+        notificationManager.notify(NOTIFICATION_ID, builderShortcutNotif.build());
+        btnSwitch.setText(getString(R.string.btn_disable_shortcut_notification));
+    }
+
+    public void doDisable() {
+        notificationManager.cancel(NOTIFICATION_ID);
+        btnSwitch.setText(getString(R.string.btn_enable_shortcut_notification));
     }
 
     private void initIsEnabled() {
@@ -112,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeIsEnabled() {
         isEnabled = !isEnabled;
+    }
+
+    public static boolean isEnabled() {
+        return isEnabled;
     }
 
     @Override
@@ -128,10 +157,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //TODO a mettre en v2 ;)
-        //TODO change theme
-        //TODO unistall tip
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -142,9 +168,19 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                SettingFragment themeChoiceDialogFragment = new SettingFragment();
+                themeChoiceDialogFragment.show(getFragmentManager(), "SettingFragmentTag");
+                return true;
+            case R.id.action_help:
+                HelpFragment helpFragment = new HelpFragment();
+                helpFragment.show(getFragmentManager(), "HelpFragmentTag");
+                return true;
+            case R.id.action_uninstall:
+                UninstallTipsFragment uninstallTipsFragment = new UninstallTipsFragment();
+                uninstallTipsFragment.show(getFragmentManager(), "UninstallTipsFragmentTag");
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
